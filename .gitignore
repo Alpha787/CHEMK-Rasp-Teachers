@@ -3,11 +3,23 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# untracking .DS_Store
+*.DS_Store
+._*
+
 # C extensions
 *.so
 
+# environment variables
+.env
+.env.js
+.env.json
+.env-cmdrc
+
 # Distribution / packaging
 .Python
+env/
+tests/
 build/
 develop-eggs/
 dist/

@@ -6,6 +6,7 @@ from typing import Final
 from aiogram import Bot
 
 # получение конфигов из .env
+# надо этот класс переделать в датакласс
 class TgKeys:
     dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
     load_dotenv()

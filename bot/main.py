@@ -1,5 +1,6 @@
 # from aiogram.utils import executor
-from aiogram import Bot, Dispatcher, types
+import asyncio
+from aiogram import Bot, Dispatcher, types, Router
 from aiogram.fsm.storage.memory import MemoryStorage
 import logging
 
@@ -8,14 +9,18 @@ from bot.misc import TgKeys
 from bot.handlers import register_all_handlers
 from bot.database.models import register_models
 
-logging.basicConfig(level=logging.INFO)
 
-async def __on_start_up(dp: Dispatcher) -> None:
+async def __on_start_up() -> None:
+    logging.basicConfig(level=logging.INFO)
+    storage = MemoryStorage()
+    bot = Bot(token=TgKeys.TOKEN, parse_mode="HTML")
+    dp = Dispatcher(storage=storage)
     register_all_filters(dp)
     register_all_handlers(dp)
-    register_models(dp)
+    register_models()
+    await dp.start_polling(bot)
 
 def start_bot():
-    bot = Bot(token=TgKeys.TOKEN, parse_mode="HTML")
-    dp = Dispatcher()
-    dp.run_polling(bot)
+    # dp.run_polling(bot)
+    asyncio.run(__on_start_up())
+    

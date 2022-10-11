@@ -10,7 +10,7 @@ from bot.handlers import register_all_handlers
 from bot.database.models import register_models
 
 
-async def __on_start_up() -> None:
+async def main() -> None:
     logging.basicConfig(level=logging.INFO)
     storage = MemoryStorage()
     bot = Bot(token=TgKeys.TOKEN, parse_mode="HTML")
@@ -22,5 +22,5 @@ async def __on_start_up() -> None:
 
 def start_bot():
     # dp.run_polling(bot)
-    asyncio.run(__on_start_up())
+    asyncio.run(main())
     

@@ -18,6 +18,7 @@ async def main() -> None:
     register_all_filters(dp)
     register_all_handlers(dp)
     register_models()
+    await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
 
 def start_bot():

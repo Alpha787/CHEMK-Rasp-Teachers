@@ -5,16 +5,21 @@ from aiogram import Dispatcher, Bot, types, Router
 from aiogram.filters import Text, Command
 from magic_filter import F
 from bot.misc.env import TgKeys
-from bot.keyboards.reply import cmd_start, cmd_test1, select_button1, select_group
+# from bot.keyboards.reply import cmd_test1, select_button1, select_group
+from bot.handlers import questions
 from aiogram.dispatcher.dispatcher import TelegramEventObserver
 
 # важная фукция для регистрации хэндлеров
 def register_other_handlers(dp: Dispatcher) -> None:
-    dp.message.register(cmd_start)
+    # handlers
+    # dp.message.register(cmd_start)
     # dp.message.register(welcome)
-    dp.message.register(cmd_test1)
-    dp.message.register(select_button1)
-    dp.message.register(select_group)
+    # dp.message.register(cmd_test1)
+    # dp.message.register(select_button1)
+    # dp.message.register(select_group)
+    
+    # routers
+    dp.include_router(questions.router)
 
 bot = Bot(token=TgKeys.TOKEN)
 dp = Dispatcher()

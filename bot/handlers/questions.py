@@ -1,7 +1,9 @@
-from aiogram import Router
+import logging
+from aiogram import Router, F
 from aiogram.filters import Text, Command
 from aiogram.types import Message, ReplyKeyboardRemove
-from bot.keyboards.reply import get_rasp
+from aiogram.fsm.context import FSMContext
+from bot.keyboards.reply import rasp_keyboard
 
 router = Router()
 
@@ -9,7 +11,24 @@ router = Router()
 async def cmd_help(message: Message):
     await message.answer(
         "Выберите нужное вам меню",
-        reply_markup=get_rasp()
+        reply_markup=rasp_keyboard()
+    )
+
+@router.message(Command(commands="cancel"))
+@router.message(F.text.casefold() == "cancel")
+async def cancel_handler(message: Message, state: FSMContext) -> None:
+    """
+    Allow user to cancel any action
+    """
+    current_state = await state.get_state()
+    if current_state is None:
+        return
+
+    logging.info(f"Cancelling state {current_state}")
+    await state.clear()
+    await message.answer(
+        "Cancelled.",
+        reply_markup=ReplyKeyboardRemove(),
     )
 
 @router.message(Text(text="Расписание", ignore_case=True))

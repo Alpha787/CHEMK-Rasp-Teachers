@@ -3,9 +3,12 @@ import scrapy
 
 
 class ChemkRaspisanieSpider(scrapy.Spider):
-    name = 'chemk_raspisanie'
+    name = 'raspisanie'
     allowed_domains = ['http://www.chemk.org/index.php/raspisanie']
-    start_urls = ['http://http://www.chemk.org/index.php/raspisanie/']
+    start_urls = ['https://rsp.chemk.org/1korp/today.htm']
 
     def parse(self, response):
-        pass
+        page = response.url.split("/")[2]
+        filename = f'quotes-{page}.html'
+        with open(filename, 'wb') as f:
+            f.write(response.body)

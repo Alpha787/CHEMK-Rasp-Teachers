@@ -8,7 +8,7 @@ class ChemkRaspisanieSpider(scrapy.Spider):
     start_urls = ['https://rsp.chemk.org/1korp/today.htm']
 
     def parse(self, response):
-        page = response.url.split("/")[2]
-        filename = f'quotes-{page}.html'
-        with open(filename, 'wb') as f:
-            f.write(response.body)
+        for subject in response.xpath('//tr/td/p'):
+            yield {
+                'text': subject.xpath("//span[contains(@style,'font-size:9.0pt;mso-fareast-language:RU')]//text()").getall()
+            }

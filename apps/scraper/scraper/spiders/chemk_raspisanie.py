@@ -19,11 +19,17 @@ class ChemkRaspisanieSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response: Selector) -> None:
-        table = response.css('.MsoNormalTable tr span::text').getall()
-        for text in table:
-            yield {
-                'table':text
-                }
+        table = response.css('.MsoNormalTable tr span::text').extract()
+        # for row in table:
+            
+        #     yield {
+        #         '1elem':row,
+        #         # '2elem':row[1],
+        #         # '3elem':row[2],
+        #         } 
+        yield {
+            'table': table
+        }
         # for span in response.xpath('//tr/td/p'):
             # yield {
             #     'gruppa': span.xpath("//span[0][contains(@style,'font-size:9.0pt;mso-fareast-language:RU')]//text()").getall(),

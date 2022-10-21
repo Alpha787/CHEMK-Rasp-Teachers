@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from operator import index
 import scrapy
 from scrapy.selector import Selector
 
@@ -19,20 +20,15 @@ class ChemkRaspisanieSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response: Selector) -> None:
-        table = response.css('.MsoNormalTable tr span::text').extract()
-        # for row in table:
-            
-        #     yield {
-        #         '1elem':row,
-        #         # '2elem':row[1],
-        #         # '3elem':row[2],
-        #         } 
+        # table = response.css('.MsoNormalTable tr span::text').extract()
+        # yield {
+        #     'table': [word for word in table]
+        # }
+        rows = []
+        table_data = response.css('.MsoNormalTable td').extract()
+        # for td in table_data:
+        #     rows.append(td.text.strip())
+
         yield {
-            'table': table
+            'rows':table_data
         }
-        # for span in response.xpath('//tr/td/p'):
-            # yield {
-            #     'gruppa': span.xpath("//span[0][contains(@style,'font-size:9.0pt;mso-fareast-language:RU')]//text()").getall(),
-            #     'Para': span.xpath("//span[1][contains(@style,'font-size:9.0pt;mso-fareast-language:RU')]//text()").getall(),
-            #     'Zamena': span.xpath("//span[2][contains(@style,'font-size:9.0pt;mso-fareast-language:RU')]//text()").getall(),
-            # }

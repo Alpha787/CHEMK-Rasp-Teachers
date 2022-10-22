@@ -2,7 +2,7 @@
 from operator import index
 import scrapy
 from scrapy.selector import Selector
-
+# FIXME: здесь 
 class ChemkRaspisanieSpider(scrapy.Spider):
     name = 'raspisanie'
     allowed_domains = ['http://www.chemk.org/index.php/raspisanie']
